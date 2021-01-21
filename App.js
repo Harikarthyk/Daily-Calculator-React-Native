@@ -1,5 +1,16 @@
+//Import Dependencies
 import React from 'react';
-import {View, Text} from 'react-native';
+import {createDrawerNavigator} from '@react-navigation/drawer';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+
+//Screens
+import Home from './Screens/Home';
+import Mode from './Screens/Mode';
+
+//Navigation
+const Drawer = createDrawerNavigator();
+const Stack = createStackNavigator();
 
 // Image Links
 // [yoga](https://user-images.githubusercontent.com/54505967/105271503-9a439900-5bbd-11eb-8b61-de913443e5ea.gif)
@@ -12,11 +23,27 @@ import {View, Text} from 'react-native';
 // [welcome](https://user-images.githubusercontent.com/54505967/105271519-a16aa700-5bbd-11eb-8510-2722f4604dd5.gif)
 // [work](https://user-images.githubusercontent.com/54505967/105271525-a29bd400-5bbd-11eb-8999-64380116cf22.gif)
 
+//Home Stack Screen
+const HomeStackScreen = () => {
+  return (
+    <Stack.Navigator initialRouteName="Home">
+      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="Mode" component={Mode} />
+    </Stack.Navigator>
+  );
+};
+
+//Drawer Navigation
 export const App = () => {
   return (
-    <View>
-      <Text>Daily Calcultor App</Text>
-    </View>
+    <NavigationContainer>
+      <Drawer.Navigator initialRouteName="Home">
+        <Drawer.Screen name="Home" component={HomeStackScreen} />
+        {/* <Drawer.Screen name="Statistics" component={About} /> */}
+        {/* <Drawer.Screen name="About" component={About} /> */}
+        {/* <Drawer.Screen name="Rate us" component={RateUs} /> */}
+      </Drawer.Navigator>
+    </NavigationContainer>
   );
 };
 
