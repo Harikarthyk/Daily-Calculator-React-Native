@@ -1,15 +1,16 @@
 import React from 'react';
 import {Text, View} from 'react-native';
 
-function Mode() {
+function Mode({navigation, route}) {
+  const modeDetails = route.params;
   return (
     <View>
-      <Text>Welcome to Mode 1</Text>
+      <Text>It's your {modeDetails.modeName}</Text>
       <View>
         <Text>00 : 00 : 00 . 00</Text>
       </View>
       <View>
-        <Text>Home</Text>
+        
         <Text>Start</Text>
       </View>
     </View>

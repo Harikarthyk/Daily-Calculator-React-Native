@@ -1,25 +1,44 @@
 import React from 'react';
-import {ScrollView, Text, View} from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import Header from '../Components/Header';
 
-function Home() {
+function Home({navigation}) {
   return (
-    <View>
+    <View style={styles.container}>
+      <Header navigation={navigation} />
       <View>
         <Text>Good Morning</Text>
       </View>
       <ScrollView>
-        <View>
-          <Text>Mode 1</Text>
-        </View>
-        <View>
-          <Text>Mode 2</Text>
-        </View>
-        <View>
-          <Text>Mode 3</Text>
-        </View>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Mode', {modeName: 'Sport Mode'})}>
+          <Text>Sports Mode</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Mode', {modeName: 'Work Mode'})}>
+          <Text>Work Mode</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Mode', {modeName: 'Party Mode'})}>
+          <Text>Party Mode</Text>
+        </TouchableOpacity>
       </ScrollView>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {},
+  titleContainer: {},
+  title: {},
+  text: {},
+  modeTitle: {},
+});
 
 export default Home;
