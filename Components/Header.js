@@ -19,8 +19,8 @@ function Header({navigation}) {
         <Image
           source={require('./menu.png')}
           style={styles.icon}
-          height={42}
-          width={30}
+          height={height / 28}
+          width={width / 12}
         />
       </TouchableOpacity>
     </View>
@@ -31,11 +31,13 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'flex-end',
     width: '100%',
-    padding: 20,
+    height: height / 14,
+    justifyContent: 'center',
   },
   icon: {
-    width: 30,
-    height: 45,
+    marginRight: 20,
+    width: width / 12,
+    height: height / 28,
   },
 });
 
