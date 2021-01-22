@@ -1,6 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import BackgroundTimer from 'react-native-background-timer';
-import {Image, StyleSheet, Text, View, Dimensions, Button} from 'react-native';
+import {
+  Image,
+  StyleSheet,
+  Text,
+  View,
+  Dimensions,
+  Button,
+  TouchableOpacity,
+} from 'react-native';
 import Header from '../Components/Header';
 
 //Screen Width and Height
@@ -16,12 +24,12 @@ const TimerButtons = (image, color) => {
 };
 
 let timer = null;
-let mili = null;
+// let mili = null;
 function Mode({navigation, route}) {
   const modeDetails = route.params;
   const [count, setCount] = useState(0);
   const [timerOn, setTimerOn] = useState(false);
-  const [ms, setMs] = useState(0);
+  // const [ms, setMs] = useState(0);
   const [reset, setReset] = useState(false);
   useEffect(() => {
     if (timerOn) {
@@ -29,19 +37,19 @@ function Mode({navigation, route}) {
       timer = BackgroundTimer.setInterval(() => {
         setCount((prev) => prev + 1);
       }, 1000);
-      mili = BackgroundTimer.setInterval(() => {
-        setMs((prev) => prev + 1);
-      }, 1);
+      // mili = BackgroundTimer.setInterval(() => {
+      //   setMs((prev) => prev + 1);
+      // }, 1);
     } else {
-      console.log('timerOn ', timerOn);
+      // console.log('timerOn ', timerOn);
       BackgroundTimer.clearInterval(timer);
-      BackgroundTimer.clearInterval(mili);
+      // BackgroundTimer.clearInterval(mili);
     }
     if (reset) {
       setCount(0);
-      setMs(0);
+      // setMs(0);
       BackgroundTimer.clearInterval(timer);
-      BackgroundTimer.clearInterval(mili);
+      // BackgroundTimer.clearInterval(mili);
     }
   }, [timerOn, reset]);
 
@@ -49,7 +57,7 @@ function Mode({navigation, route}) {
     var date = new Date(0);
     date.setSeconds(seconds); // specify value for SECONDS here
 
-    if (ms >= 60) setMs((pre) => 0);
+    // if (ms >= 60) setMs((pre) => 0);
     return date.toISOString().substr(11, 8);
   };
   return (
@@ -74,34 +82,81 @@ function Mode({navigation, route}) {
       </View>
       <View style={styles.timer}>
         <View style={styles.clock}>
-          <Text style={{fontSize: 45, textAlign: 'center', margin: 20}}>
-            {secondsToTime(Math.floor(count / 1))}.
-            {(ms + '').length == 1 ? '0' + ms : ms}
+          <Text style={styles.clockText1}>
+            {secondsToTime(Math.floor(count / 1))}
+            {/* <Text style={styles.clockText2}>
+              .{(ms + '').length == 1 ? '0' + ms : ms} ms
+            </Text> */}
           </Text>
         </View>
-        <View style={[styles.buttonContainer]}>
-          <Button
-            onPress={() => setTimerOn(true)}
-            color="green"
-            title="Start"></Button>
+        <View style={styles.buttonContainer}>
+          {timerOn ? (
+            <>
+              <TouchableOpacity
+                onPress={() => {
+                  setReset(false);
+                  setTimerOn(false);
+                }}
+                style={styles.button}>
+                <Image
+                  source={require('../Components/pause.png')}
+                  style={styles.buttonImage}
+                />
+                <Text style={styles.buttonText}>Pause Mode</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  setReset(true);
+                  setTimerOn(false);
+                }}
+                style={styles.button}>
+                <Image
+                  source={require('../Components/repeat.png')}
+                  style={styles.buttonImage}
+                />
+                <Text style={styles.buttonText}>Reset Mode</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  alert('Mode Ended');
+                }}
+                style={styles.button}>
+                <Image
+                  source={require('../Components/stop.png')}
+                  style={styles.buttonImage}
+                />
+                <Text style={styles.buttonText}>End Mode</Text>
+              </TouchableOpacity>
+            </>
+          ) : (
+            <TouchableOpacity
+              onPress={() => setTimerOn(true)}
+              style={styles.button}>
+              <Image
+                source={require('../Components/play.png')}
+                style={styles.buttonImage}
+              />
+              <Text style={styles.buttonText}>Start Mode</Text>
+            </TouchableOpacity>
+          )}
         </View>
-        <View style={[styles.buttonContainer]}>
-          <Button
-            onPress={() => {
-              setReset(false);
-              setTimerOn(false);
-            }}
-            title="Pause"></Button>
+        {timerOn ? (
+          <TouchableOpacity
+            style={[styles.caption, {backgroundColor: '#da6c8f'}]}>
+            <Text style={styles.captionText}>Your Mode is Started 🏃🏼‍♂️</Text>
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity
+            style={[styles.caption, {backgroundColor: '#5e8c61'}]}>
+            <Text style={styles.captionText}>
+              Click Start Mode to Get Started
+            </Text>
+          </TouchableOpacity>
+        )}
+        <View style={styles.manual}>
+          <Text style={styles.manual}>Add Manual Hours</Text>
         </View>
-        <View style={[styles.buttonContainer]}>
-          <Button
-            onPress={() => {
-              setReset(true);
-              setTimerOn(false);
-            }}
-            color="red"
-            title="Reset"></Button>
-        </View>
+        <View style={styles.footer}></View>
       </View>
     </View>
   );
@@ -166,6 +221,42 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     fontWeight: 'bold',
     fontFamily: 'serif',
+  },
+  clock: {
+    backgroundColor: 'white',
+    marginBottom: 10,
+    borderRadius: 20,
+    elevation: 10,
+    height: height / 5.3,
+    justifyContent: 'center',
+  },
+  clockText1: {
+    fontSize: 50,
+    justifyContent: 'center',
+    textAlign: 'center',
+    fontFamily: 'Roboto',
+    fontWeight: 'bold',
+  },
+  clockText2: {
+    fontSize: 26,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    marginTop: 20,
+  },
+  button: {
+    alignItems: 'center',
+  },
+  buttonImage: {
+    height: 50,
+    width: 50,
+    marginBottom: 4,
+  },
+  buttonText: {
+    fontSize: 13,
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
   },
 });
 
