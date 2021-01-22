@@ -45,7 +45,7 @@ const modeImages = [
   'https://user-images.githubusercontent.com/54505967/105439154-5074b480-5c8a-11eb-8313-5b1900ace1a8.png',
   'https://user-images.githubusercontent.com/54505967/105439157-51a5e180-5c8a-11eb-8f24-0cf6b3b3d20b.png',
 ];
-const ModeButton = (index) => {
+const ModeButton = ({index, navigation}) => {
   return (
     <TouchableOpacity
       onPress={() =>
@@ -93,23 +93,23 @@ function Home({navigation}) {
         <ScrollView style={styles.modes}>
           {/* //Sports and yoga Mode */}
           <View style={styles.modeView}>
-            {ModeButton(0)}
-            {ModeButton(1)}
+            <ModeButton index={0} navigation={navigation} />
+            <ModeButton index={1} navigation={navigation} />
           </View>
           {/* Study and work Mode */}
           <View style={styles.modeView}>
-            {ModeButton(2)}
-            {ModeButton(3)}
+            <ModeButton index={2} navigation={navigation} />
+            <ModeButton index={3} navigation={navigation} />
           </View>
           {/* Fun and Cooking Mode */}
           <View style={styles.modeView}>
-            {ModeButton(4)}
-            {ModeButton(5)}
+            <ModeButton index={4} navigation={navigation} />
+            <ModeButton index={5} navigation={navigation} />
           </View>
           {/* Fitness and Relax */}
           <View style={styles.modeView}>
-            {ModeButton(6)}
-            {ModeButton(7)}
+            <ModeButton index={6} navigation={navigation} />
+            <ModeButton index={7} navigation={navigation} />
           </View>
         </ScrollView>
       </View>
@@ -121,7 +121,7 @@ function Home({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: '#FBFBFF',
+    backgroundColor: '#FBFBFF',
   },
   wrapper: {
     height: height / 1.09,
