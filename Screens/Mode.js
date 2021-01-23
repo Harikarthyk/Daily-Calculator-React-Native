@@ -6,13 +6,14 @@ import {
   Text,
   View,
   Dimensions,
-  Button,
   TouchableOpacity,
+  TextInput,
+  ScrollView,
 } from 'react-native';
 import Header from '../Components/Header';
 
 //Screen Width and Height
-// const width = Dimensions.get('window').width;
+const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
 const TimerButtons = (image, color) => {
@@ -29,6 +30,9 @@ function Mode({navigation, route}) {
   const modeDetails = route.params;
   const [count, setCount] = useState(0);
   const [timerOn, setTimerOn] = useState(false);
+  const [hr, setHr] = useState('');
+  const [min, setMin] = useState('');
+  const [sec, setSec] = useState('');
   // const [ms, setMs] = useState(0);
   const [reset, setReset] = useState(false);
   useEffect(() => {
@@ -61,7 +65,7 @@ function Mode({navigation, route}) {
     return date.toISOString().substr(11, 8);
   };
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       {/* <Header navigation={navigation} /> */}
       <View style={styles.titleHeader}>
         <View style={styles.titleHeaderLeft}>
@@ -101,6 +105,8 @@ function Mode({navigation, route}) {
                 <Image
                   source={require('../Components/pause.png')}
                   style={styles.buttonImage}
+                  height={50}
+                  width={50}
                 />
                 <Text style={styles.buttonText}>Pause Mode</Text>
               </TouchableOpacity>
@@ -113,6 +119,8 @@ function Mode({navigation, route}) {
                 <Image
                   source={require('../Components/repeat.png')}
                   style={styles.buttonImage}
+                  height={50}
+                  width={50}
                 />
                 <Text style={styles.buttonText}>Reset Mode</Text>
               </TouchableOpacity>
@@ -124,6 +132,8 @@ function Mode({navigation, route}) {
                 <Image
                   source={require('../Components/stop.png')}
                   style={styles.buttonImage}
+                  height={50}
+                  width={50}
                 />
                 <Text style={styles.buttonText}>End Mode</Text>
               </TouchableOpacity>
@@ -135,6 +145,8 @@ function Mode({navigation, route}) {
               <Image
                 source={require('../Components/play.png')}
                 style={styles.buttonImage}
+                height={50}
+                width={50}
               />
               <Text style={styles.buttonText}>Start Mode</Text>
             </TouchableOpacity>
@@ -153,12 +165,72 @@ function Mode({navigation, route}) {
             </Text>
           </TouchableOpacity>
         )}
-        <View style={styles.manual}>
-          <Text style={styles.manual}>Add Manual Hours</Text>
+        <Text style={{textAlign: 'center', fontWeight: 'bold', fontSize: 15}}>
+          OR
+        </Text>
+        <TouchableOpacity style={styles.manual}>
+          <Text
+            style={{
+              textAlign: 'center',
+              textDecorationLine: 'underline',
+              fontWeight: 'bold',
+              marginVertical: 15,
+            }}>
+            Add Manual Hours
+          </Text>
+        </TouchableOpacity>
+        <View style={styles.modelAdd}>
+          <TextInput
+            placeholder="hrs"
+            style={styles.inputBox}
+            numberOfLine={1}
+            keyboardAppearance="light"
+            keyboardType="numeric"
+            onChange={(e) => setHr(e)}
+            value={hr}
+          />
+          <TextInput
+            placeholder="min"
+            style={styles.inputBox}
+            numberOfLines={1}
+            keyboardType="numeric"
+            value={min}
+            onChange={(e) => setMin(e)}
+          />
+          <TextInput
+            placeholder="sec"
+            numberOfLine={1}
+            style={styles.inputBox}
+            keyboardType="numeric"
+            value={sec}
+            onChange={(e) => setSec(e)}
+          />
+          <TouchableOpacity style={styles.inputButton}>
+            <Text
+              style={{
+                color: '#fff',
+                fontWeight: 'bold',
+                textTransform: 'uppercase',
+              }}>
+              Add
+            </Text>
+          </TouchableOpacity>
         </View>
-        <View style={styles.footer}></View>
+        <View style={{alignItems: 'center', marginVertical: 10}}>
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
+            style={styles.footer}>
+            <Text style={styles.footerText}>Back Home</Text>
+            <Image
+              source={require('../Components/home.png')}
+              style={styles.footerImage}
+              height={50}
+              width={50}
+            />
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
@@ -167,6 +239,7 @@ const styles = StyleSheet.create({
   container: {
     margin: 10,
     flex: 1,
+    // backgroundColor: 'red',
     backgroundColor: '#FBFBFF',
   },
   titleHeader: {
@@ -257,6 +330,49 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: 'bold',
     textTransform: 'uppercase',
+  },
+  footer: {
+    flexDirection: 'row',
+    backgroundColor: '#fff',
+    elevation: 3,
+    borderRadius: 20,
+    alignItems: 'center',
+    height: 50,
+    justifyContent: 'space-evenly',
+    width: width / 2,
+  },
+  footerText: {
+    fontWeight: 'bold',
+    fontSize: 15,
+  },
+  footerImage: {
+    backgroundColor: '#fff',
+    width: 30,
+    height: 30,
+  },
+  modelAdd: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+  },
+  inputBox: {
+    borderWidth: 2,
+    borderColor: 'black',
+    borderRadius: 10,
+    flex: 1,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginHorizontal: 5,
+  },
+  inputButton: {
+    flex: 1,
+    textAlign: 'center',
+    borderWidth: 2,
+    borderColor: 'black',
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#1f2041',
   },
 });
 
