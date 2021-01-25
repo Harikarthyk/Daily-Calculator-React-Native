@@ -11,7 +11,7 @@ import Mode from './Screens/Mode';
 import About from './Screens/About';
 import TodayStatistics from './Screens/TodayStatistics';
 import RateUs from './Screens/RateUs';
-import OverallStatistics from './Screens/OverallStatistics';
+// import OverallStatistics from './Screens/OverallStatistics';
 
 //Navigation
 const Drawer = createDrawerNavigator();
@@ -104,7 +104,7 @@ export const App = () => {
           name="TodayStatistics"
           component={TodayStatistics}
         />
-        <Drawer.Screen
+        {/* <Drawer.Screen
           options={{
             drawerIcon: ({focused}) => (
               <Image
@@ -130,7 +130,7 @@ export const App = () => {
           }}
           name="OverallReport"
           component={OverallStatistics}
-        />
+        /> */}
         <Drawer.Screen
           options={{
             drawerIcon: ({focused}) => (
