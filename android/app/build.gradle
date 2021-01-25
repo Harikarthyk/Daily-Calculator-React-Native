@@ -187,6 +187,9 @@ dependencies {
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
 
+
+    implementation project(':react-native-svg')
+
     //Custom Copied
     implementation 'com.facebook.fresco:fresco:2.0.0'
     // For animated GIF support

@@ -8,9 +8,10 @@ import {
   Dimensions,
   TouchableOpacity,
   TextInput,
+  Alert,
   ScrollView,
 } from 'react-native';
-import Header from '../Components/Header';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 //Screen Width and Height
 const width = Dimensions.get('window').width;
@@ -30,11 +31,13 @@ function Mode({navigation, route}) {
   const modeDetails = route.params;
   const [count, setCount] = useState(0);
   const [timerOn, setTimerOn] = useState(false);
-  const [hr, setHr] = useState('');
-  const [min, setMin] = useState('');
-  const [sec, setSec] = useState('');
+  const [hr, setHr] = useState(0);
+  const [min, setMin] = useState(0);
+  const [sec, setSec] = useState(0);
   // const [ms, setMs] = useState(0);
   const [reset, setReset] = useState(false);
+
+  //Handles seconds on timerOn
   useEffect(() => {
     if (timerOn) {
       setReset(false);
@@ -57,13 +60,70 @@ function Mode({navigation, route}) {
     }
   }, [timerOn, reset]);
 
+  //Seconds to Time Convertor
   const secondsToTime = (seconds) => {
     var date = new Date(0);
     date.setSeconds(seconds); // specify value for SECONDS here
-
     // if (ms >= 60) setMs((pre) => 0);
     return date.toISOString().substr(11, 8);
   };
+
+  const confirmMessage = (timeSpent, totalSec) => {
+    Alert.alert(
+      'Add Time in Daily Chart',
+      'YES to add this data to chart , NO to go home',
+      [
+        {
+          text: 'NO',
+          onPress: () => {
+            return;
+          },
+          style: 'cancel',
+        },
+        {
+          text: 'YES',
+          onPress: () => {
+            handleSubmit(timeSpent, totalSec);
+          },
+        },
+      ],
+    );
+  };
+
+  const handleSubmit = async (timeSpent, totalSec) => {
+    try {
+      const jsonValue = await AsyncStorage.getItem('@dailyCalc_1407');
+      let preValue = jsonValue != null ? JSON.parse(jsonValue) : {};
+      let temp = preValue[(new Date() + '').substring(0, 15)] || [];
+      let exists = false;
+
+      for (let i = 0; i < temp.length; i++) {
+        let t = temp[i];
+        if (t.mode === modeDetails.modeName) {
+          t.seconds += totalSec;
+          t.count++;
+          temp[i] = t;
+          exists = true;
+          break;
+        }
+      }
+      if (!exists) {
+        temp.push({
+          mode: modeDetails.modeName,
+          name: modeDetails.modeName,
+          seconds: totalSec,
+          count: 1,
+        });
+      }
+      let key = (new Date() + '').substring(0, 15);
+      preValue[key] = temp;
+      await AsyncStorage.setItem('@dailyCalc_1407', JSON.stringify(preValue));
+      navigation.navigate('TodayStatistics');
+    } catch (e) {
+      // saving error
+    }
+  };
+
   return (
     <ScrollView style={styles.container}>
       {/* <Header navigation={navigation} /> */}
@@ -126,7 +186,9 @@ function Mode({navigation, route}) {
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
-                  alert('Mode Ended');
+                  confirmMessage(secondsToTime(Math.floor(count / 1)), count);
+                  setReset(true);
+                  setTimerOn(false);
                 }}
                 style={styles.button}>
                 <Image
@@ -186,7 +248,11 @@ function Mode({navigation, route}) {
             numberOfLine={1}
             keyboardAppearance="light"
             keyboardType="numeric"
-            onChange={(e) => setHr(e)}
+            onChangeText={(e) =>
+              e < 9
+                ? setHr(e)
+                : Alert.alert('Max hour that can be added manually is 8')
+            }
             value={hr}
           />
           <TextInput
@@ -195,7 +261,9 @@ function Mode({navigation, route}) {
             numberOfLines={1}
             keyboardType="numeric"
             value={min}
-            onChange={(e) => setMin(e)}
+            onChangeText={(e) =>
+              e < 60 ? setMin(e) : Alert.alert('Enter valid Time')
+            }
           />
           <TextInput
             placeholder="sec"
@@ -203,7 +271,9 @@ function Mode({navigation, route}) {
             style={styles.inputBox}
             keyboardType="numeric"
             value={sec}
-            onChange={(e) => setSec(e)}
+            onChangeText={(e) =>
+              e < 60 ? setSec(e) : Alert.alert('Enter valid Time')
+            }
           />
           <TouchableOpacity style={styles.inputButton}>
             <Text
@@ -211,6 +281,18 @@ function Mode({navigation, route}) {
                 color: '#fff',
                 fontWeight: 'bold',
                 textTransform: 'uppercase',
+              }}
+              onPress={() => {
+                if (hr == 0 && min == 0 && sec == 0) {
+                  return Alert.alert('Enter Time Spend to proceed');
+                }
+                let totalSec = Number(sec);
+                let thr = hr * 60 * 60;
+                let tmin = min * 60;
+                totalSec += thr;
+                totalSec += tmin;
+                // console.log(totalSec, '  -', tmin, thr, sec);
+                confirmMessage(`${hr}:${min}:${sec}`, totalSec);
               }}>
               Add
             </Text>

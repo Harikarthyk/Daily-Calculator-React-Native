@@ -46,10 +46,11 @@ const modeImages = [
   'https://user-images.githubusercontent.com/54505967/105439157-51a5e180-5c8a-11eb-8f24-0cf6b3b3d20b.png',
 ];
 const ModeButton = ({index, navigation}) => {
+  
   return (
     <TouchableOpacity
       onPress={() =>
-        navigation.navigate('Mode', {
+        navigation.push('Mode', {
           modeName: modeNames[index],
           modeImage: modeImages[index],
         })
