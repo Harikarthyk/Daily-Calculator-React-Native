@@ -3,12 +3,13 @@ import {ScrollView, StyleSheet, Text, View, Dimensions} from 'react-native';
 import Header from '../Components/Header';
 import {PieChart} from 'react-native-chart-kit';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useIsFocused} from '@react-navigation/native';
 
-const width = Dimensions.get('screen').width;
 const height = Dimensions.get('screen').height;
 
 function TodayStatistics({navigation}) {
   const [data, setData] = useState([]);
+  const isFocused = useIsFocused();
   const color = {
     'Sport Mode': '#ffd972',
     'Yoga Mode': '#81968F',
@@ -19,6 +20,7 @@ function TodayStatistics({navigation}) {
     'Fitness Mode': '#FFCAAF',
     'Relax Mode': '#03B5AA',
   };
+  const [load, setLoad] = useState(false);
   useEffect(() => {
     const getData = async () => {
       const jsonValue = await AsyncStorage.getItem('@dailyCalc_1407');
@@ -31,9 +33,10 @@ function TodayStatistics({navigation}) {
         a.legendFontSize = 15;
       });
       setData((pre) => arr);
+      setLoad(true);
     };
     getData();
-  }, []);
+  }, [isFocused, data]);
   const secondsToTime = (seconds) => {
     var date = new Date(0);
     date.setSeconds(seconds); // specify value for SECONDS here
@@ -46,7 +49,7 @@ function TodayStatistics({navigation}) {
       <Header navigation={navigation} />
       <Text style={styles.title}>{(new Date() + '').substring(0, 15)}</Text>
       <View style={styles.stats}>
-        {data.length >= 1 ? (
+        {data.length >= 1 && load && isFocused ? (
           <View>
             <PieChart
               data={data}
@@ -72,29 +75,48 @@ function TodayStatistics({navigation}) {
             />
           </View>
         ) : (
-          <Text>""</Text>
+          <View>
+            <Text
+              style={{
+                textAlign: 'center',
+                fontSize: 20,
+                fontWeight: '600',
+              }}>
+              Not Activities to track Today : (
+            </Text>
+          </View>
         )}
-        <Text style={[styles.title, {fontSize: 20, marginVertical: 10}]}>
-          Total Hours Spent on each Modes
-        </Text>
-        <ScrollView style={styles.details}>
-          {data.map((d, index) => {
-            return (
-              <View
-                key={index}
-                style={[styles.detail, {backgroundColor: color[d.mode]}]}>
-                <Text style={styles.detailName}>{d.mode}</Text>
-                <Text style={styles.detailSeconds}>
-                  Total Hours Spent{' '}
-                  <Text style={{fontWeight: 'bold'}}>
-                    {' '}
-                    {secondsToTime(d.seconds)}
-                  </Text>
-                </Text>
-              </View>
-            );
-          })}
-        </ScrollView>
+        {data.length >= 1 && load ? (
+          <>
+            <Text style={[styles.title, {fontSize: 20, marginVertical: 10}]}>
+              Total Hours Spent on each Modes
+            </Text>
+            <ScrollView style={styles.details}>
+              {data.map((d, index) => {
+                return (
+                  <View
+                    key={index}
+                    style={[styles.detail, {backgroundColor: color[d.mode]}]}>
+                    <Text style={styles.detailName}>{d.mode}</Text>
+                    <Text style={styles.detailSeconds}>
+                      Total Hours Spent{' '}
+                      <Text style={{fontWeight: 'bold'}}>
+                        {' '}
+                        {secondsToTime(d.seconds)}
+                      </Text>
+                    </Text>
+                  </View>
+                );
+              })}
+            </ScrollView>
+          </>
+        ) : load ? (
+          <Text></Text>
+        ) : (
+          <Text style={{fontSize: 15, fontWeight: '200', textAlign: 'center'}}>
+            Loading ...
+          </Text>
+        )}
       </View>
     </View>
   );

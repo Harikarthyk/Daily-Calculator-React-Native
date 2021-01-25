@@ -118,7 +118,10 @@ function Mode({navigation, route}) {
       let key = (new Date() + '').substring(0, 15);
       preValue[key] = temp;
       await AsyncStorage.setItem('@dailyCalc_1407', JSON.stringify(preValue));
-      navigation.navigate('TodayStatistics');
+      Alert.alert(
+        'Data added to the chart , check out today Statistics Screen ',
+      );
+      navigation.navigate('Home');
     } catch (e) {
       // saving error
     }
