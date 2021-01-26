@@ -75,9 +75,11 @@ function TodayStatistics({navigation}) {
             />
           </View>
         ) : (
-          <View>
+          <View
+            style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
             <Text
               style={{
+                justifyContent: 'center',
                 textAlign: 'center',
                 fontSize: 20,
                 fontWeight: '600',
@@ -101,7 +103,6 @@ function TodayStatistics({navigation}) {
                     <Text style={styles.detailSeconds}>
                       Total Hours Spent{' '}
                       <Text style={{fontWeight: 'bold'}}>
-                        {' '}
                         {secondsToTime(d.seconds)}
                       </Text>
                     </Text>
@@ -113,9 +114,12 @@ function TodayStatistics({navigation}) {
         ) : load ? (
           <Text></Text>
         ) : (
-          <Text style={{fontSize: 15, fontWeight: '200', textAlign: 'center'}}>
-            Loading ...
-          </Text>
+          <Text
+            style={{
+              fontSize: 15,
+              fontWeight: '200',
+              textAlign: 'center',
+            }}></Text>
         )}
       </View>
     </View>
