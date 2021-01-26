@@ -13,10 +13,27 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import bake from '../Components/bake.png';
+import chat from '../Components/chat.png';
+import computer from '../Components/computer.png';
+import fitness from '../Components/fitness.png';
+import meditation from '../Components/meditation.png';
+import relaxation from '../Components/relaxation.png';
+import sport from '../Components/sport.png';
+import studying from '../Components/studying.png';
 //Screen Width and Height
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
-
+const modeImages = [
+  sport,
+  meditation,
+  computer,
+  studying,
+  chat,
+  bake,
+  fitness,
+  relaxation,
+];
 const TimerButtons = (image, color) => {
   return (
     <View>

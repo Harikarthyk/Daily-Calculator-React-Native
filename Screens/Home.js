@@ -14,15 +14,15 @@ import Header from '../Components/Header';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
-//PNG Images
-// ![sport](https://user-images.githubusercontent.com/54505967/105438354-d5f76500-5c88-11eb-9817-6cbf3a39532c.png)
-// ![meditation](https://user-images.githubusercontent.com/54505967/105439149-4eaaf100-5c8a-11eb-9043-f856e1ceb68a.png)
-// ![studying](https://user-images.githubusercontent.com/54505967/105439152-4fdc1e00-5c8a-11eb-8525-aa67c0b40fbc.png)
-// ![computer](https://user-images.githubusercontent.com/54505967/105439153-5074b480-5c8a-11eb-9008-e83456739211.png)
-// ![fitness](https://user-images.githubusercontent.com/54505967/105439154-5074b480-5c8a-11eb-8313-5b1900ace1a8.png)
-// ![chat](https://user-images.githubusercontent.com/54505967/105439155-510d4b00-5c8a-11eb-806a-7e7c6af4757e.png)
-// ![relaxation](https://user-images.githubusercontent.com/54505967/105439157-51a5e180-5c8a-11eb-8f24-0cf6b3b3d20b.png)
-// ![bake](https://user-images.githubusercontent.com/54505967/105439159-51a5e180-5c8a-11eb-8d53-c4802bb1c052.png)
+//Import Images
+import bake from '../Components/bake.png';
+import chat from '../Components/chat.png';
+import computer from '../Components/computer.png';
+import fitness from '../Components/fitness.png';
+import meditation from '../Components/meditation.png';
+import relaxation from '../Components/relaxation.png';
+import sport from '../Components/sport.png';
+import studying from '../Components/studying.png';
 
 const modeNames = [
   'Sport Mode',
@@ -36,30 +36,27 @@ const modeNames = [
 ];
 
 const modeImages = [
-  'https://user-images.githubusercontent.com/54505967/105438354-d5f76500-5c88-11eb-9817-6cbf3a39532c.png',
-  'https://user-images.githubusercontent.com/54505967/105439149-4eaaf100-5c8a-11eb-9043-f856e1ceb68a.png',
-  'https://user-images.githubusercontent.com/54505967/105439152-4fdc1e00-5c8a-11eb-8525-aa67c0b40fbc.png',
-  'https://user-images.githubusercontent.com/54505967/105439153-5074b480-5c8a-11eb-9008-e83456739211.png',
-  'https://user-images.githubusercontent.com/54505967/105439155-510d4b00-5c8a-11eb-806a-7e7c6af4757e.png',
-  'https://user-images.githubusercontent.com/54505967/105439159-51a5e180-5c8a-11eb-8d53-c4802bb1c052.png',
-  'https://user-images.githubusercontent.com/54505967/105439154-5074b480-5c8a-11eb-8313-5b1900ace1a8.png',
-  'https://user-images.githubusercontent.com/54505967/105439157-51a5e180-5c8a-11eb-8f24-0cf6b3b3d20b.png',
+  sport,
+  meditation,
+  computer,
+  studying,
+  chat,
+  bake,
+  fitness,
+  relaxation,
 ];
-const ModeButton = ({index, navigation}) => {
-  
+const ModeButton = ({index, navigation, image_src}) => {
   return (
     <TouchableOpacity
       onPress={() =>
         navigation.push('Mode', {
           modeName: modeNames[index],
-          modeImage: modeImages[index],
+          modeImage: image_src,
         })
       }
       style={styles.mode}>
       <Image
-        source={{
-          uri: modeImages[index],
-        }}
+        source={require(image_src)}
         style={{
           height: height / 6,
           width: width / 3,
@@ -75,18 +72,6 @@ function Home({navigation}) {
   return (
     <View style={styles.container}>
       <Header navigation={navigation} />
-      {/* <View style={styles.topBox}>
-        <Image
-          source={{
-            uri:
-              'https://user-images.githubusercontent.com/54505967/105271519-a16aa700-5bbd-11eb-8510-2722f4604dd5.gif',
-          }}
-          height={height / 3.5}
-          style={{height: height / 3.5, width: width - 30, borderRadius: 30}}
-          width={width - 30}
-        />
-        <Text style={styles.topBoxText}>Good Morning</Text>
-      </View> */}
       <View style={styles.wrapper}>
         <View style={styles.titleHeader}>
           <Text style={styles.titleText}>Select your Mode</Text>
@@ -94,23 +79,55 @@ function Home({navigation}) {
         <ScrollView style={styles.modes}>
           {/* //Sports and yoga Mode */}
           <View style={styles.modeView}>
-            <ModeButton index={0} navigation={navigation} />
-            <ModeButton index={1} navigation={navigation} />
+            <ModeButton
+              index={0}
+              navigation={navigation}
+              image_src="../Components/chat.png"
+            />
+            <ModeButton
+              index={1}
+              navigation={navigation}
+              image_src="../Components/chat.png"
+            />
           </View>
           {/* Study and work Mode */}
           <View style={styles.modeView}>
-            <ModeButton index={2} navigation={navigation} />
-            <ModeButton index={3} navigation={navigation} />
+            <ModeButton
+              index={2}
+              navigation={navigation}
+              image_src="../Components/chat.png"
+            />
+            <ModeButton
+              index={3}
+              navigation={navigation}
+              image_src="../Components/chat.png"
+            />
           </View>
           {/* Fun and Cooking Mode */}
           <View style={styles.modeView}>
-            <ModeButton index={4} navigation={navigation} />
-            <ModeButton index={5} navigation={navigation} />
+            <ModeButton
+              index={4}
+              navigation={navigation}
+              image_src="../Components/chat.png"
+            />
+            <ModeButton
+              index={5}
+              navigation={navigation}
+              image_src="../Components/chat.png"
+            />
           </View>
           {/* Fitness and Relax */}
           <View style={styles.modeView}>
-            <ModeButton index={6} navigation={navigation} />
-            <ModeButton index={7} navigation={navigation} />
+            <ModeButton
+              index={6}
+              navigation={navigation}
+              image_src="../Components/chat.png"
+            />
+            <ModeButton
+              index={7}
+              navigation={navigation}
+              image_src="../Components/chat.png"
+            />
           </View>
         </ScrollView>
       </View>

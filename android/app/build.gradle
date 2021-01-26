@@ -129,7 +129,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.dailycalculator"
+        applicationId "com.dailycalculator_"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
