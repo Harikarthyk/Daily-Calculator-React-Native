@@ -14,16 +14,6 @@ import Header from '../Components/Header';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
-//Import Images
-import bake from '../Components/bake.png';
-import chat from '../Components/chat.png';
-import computer from '../Components/computer.png';
-import fitness from '../Components/fitness.png';
-import meditation from '../Components/meditation.png';
-import relaxation from '../Components/relaxation.png';
-import sport from '../Components/sport.png';
-import studying from '../Components/studying.png';
-
 const modeNames = [
   'Sport Mode',
   'Yoga Mode',
@@ -33,17 +23,6 @@ const modeNames = [
   'Cooking Mode',
   'Fitness Mode',
   'Relax Mode',
-];
-
-const modeImages = [
-  sport,
-  meditation,
-  computer,
-  studying,
-  chat,
-  bake,
-  fitness,
-  relaxation,
 ];
 const ModeButton = ({index, navigation, image_src}) => {
   return (
@@ -56,7 +35,7 @@ const ModeButton = ({index, navigation, image_src}) => {
       }
       style={styles.mode}>
       <Image
-        source={require(image_src)}
+        source={image_src}
         style={{
           height: height / 6,
           width: width / 3,
@@ -82,12 +61,12 @@ function Home({navigation}) {
             <ModeButton
               index={0}
               navigation={navigation}
-              image_src="../Components/chat.png"
+              image_src={require('../Components/sport.png')}
             />
             <ModeButton
               index={1}
               navigation={navigation}
-              image_src="../Components/chat.png"
+              image_src={require('../Components/meditation.png')}
             />
           </View>
           {/* Study and work Mode */}
@@ -95,12 +74,12 @@ function Home({navigation}) {
             <ModeButton
               index={2}
               navigation={navigation}
-              image_src="../Components/chat.png"
+              image_src={require('../Components/studying.png')}
             />
             <ModeButton
               index={3}
               navigation={navigation}
-              image_src="../Components/chat.png"
+              image_src={require('../Components/computer.png')}
             />
           </View>
           {/* Fun and Cooking Mode */}
@@ -108,12 +87,12 @@ function Home({navigation}) {
             <ModeButton
               index={4}
               navigation={navigation}
-              image_src="../Components/chat.png"
+              image_src={require('../Components/chat.png')}
             />
             <ModeButton
               index={5}
               navigation={navigation}
-              image_src="../Components/chat.png"
+              image_src={require('../Components/bake.png')}
             />
           </View>
           {/* Fitness and Relax */}
@@ -121,12 +100,12 @@ function Home({navigation}) {
             <ModeButton
               index={6}
               navigation={navigation}
-              image_src="../Components/chat.png"
+              image_src={require('../Components/fitness.png')}
             />
             <ModeButton
               index={7}
               navigation={navigation}
-              image_src="../Components/chat.png"
+              image_src={require('../Components/relaxation.png')}
             />
           </View>
         </ScrollView>

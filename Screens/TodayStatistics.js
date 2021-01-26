@@ -29,7 +29,7 @@ function TodayStatistics({navigation}) {
       arr.forEach((a) => {
         a.color = color[a.mode];
         a.name = '';
-        a.legendFontColor = '#7F7F7F';
+        a.legendFontColor = '#fff';
         a.legendFontSize = 15;
       });
       setData((pre) => arr);
@@ -70,7 +70,7 @@ function TodayStatistics({navigation}) {
                 borderRadius: 16,
               }}
               accessor="seconds"
-              paddingLeft="100"
+              paddingLeft="80"
               //absolute //for the absolute number remove if you want percentage
             />
           </View>

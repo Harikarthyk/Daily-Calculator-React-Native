@@ -13,34 +13,9 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import bake from '../Components/bake.png';
-import chat from '../Components/chat.png';
-import computer from '../Components/computer.png';
-import fitness from '../Components/fitness.png';
-import meditation from '../Components/meditation.png';
-import relaxation from '../Components/relaxation.png';
-import sport from '../Components/sport.png';
-import studying from '../Components/studying.png';
 //Screen Width and Height
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
-const modeImages = [
-  sport,
-  meditation,
-  computer,
-  studying,
-  chat,
-  bake,
-  fitness,
-  relaxation,
-];
-const TimerButtons = (image, color) => {
-  return (
-    <View>
-      <Text></Text>
-    </View>
-  );
-};
 
 let timer = null;
 // let mili = null;
@@ -135,10 +110,10 @@ function Mode({navigation, route}) {
       let key = (new Date() + '').substring(0, 15);
       preValue[key] = temp;
       await AsyncStorage.setItem('@dailyCalc_1407', JSON.stringify(preValue));
-      Alert.alert(
-        'Data added to the chart , check out today Statistics Screen ',
-      );
-      navigation.navigate('Home');
+      // Alert.alert(
+      //   'Data added to the chart , check out today Statistics Screen ',
+      // );
+      navigation.navigate('TodayStatistics');
     } catch (e) {
       // saving error
     }
@@ -154,7 +129,7 @@ function Mode({navigation, route}) {
         </View>
         <View style={styles.titleHeaderRight}>
           <Image
-            source={{uri: modeDetails.modeImage}}
+            source={modeDetails.modeImage}
             height={100}
             width={100}
             style={styles.image}
