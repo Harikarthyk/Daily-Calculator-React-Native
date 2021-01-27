@@ -83,6 +83,7 @@ function TodayStatistics({navigation}) {
                 textAlign: 'center',
                 fontSize: 20,
                 fontWeight: '600',
+                margin: 20,
               }}>
               Not Activities to track Today : (
             </Text>
