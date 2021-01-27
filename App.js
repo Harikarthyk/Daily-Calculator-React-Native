@@ -147,7 +147,7 @@ export const App = () => {
           name="About"
           component={About}
         />
-        {/* <Drawer.Screen
+        <Drawer.Screen
           options={{
             drawerIcon: ({focused}) => (
               <Image
@@ -173,7 +173,7 @@ export const App = () => {
           }}
           name="RateUs"
           component={RateUs}
-        /> */}
+        />
       </Drawer.Navigator>
     </NavigationContainer>
   );
