@@ -25,7 +25,16 @@ function TodayStatistics({navigation}) {
     const getData = async () => {
       const jsonValue = await AsyncStorage.getItem('@dailyCalc_1407');
       let preValue = jsonValue != null ? JSON.parse(jsonValue) : {};
+      // if(preValue === {})
       let arr = preValue[(new Date() + '').substring(0, 15)];
+      if (!arr || arr.length === 0) {
+        //To clear the previous data
+        await AsyncStorage.setItem('@dailyCalc_1407', JSON.stringify(preValue));
+
+        setLoad(true);
+        return;
+      }
+      // console.log(preValue);
       arr.forEach((a) => {
         a.color = color[a.mode];
         a.name = '';
@@ -82,8 +91,9 @@ function TodayStatistics({navigation}) {
                 justifyContent: 'center',
                 textAlign: 'center',
                 fontSize: 20,
+                marginTop: 50,
                 fontWeight: '600',
-                margin: 20,
+                alignItems: 'center',
               }}>
               Not Activities to track Today : (
             </Text>

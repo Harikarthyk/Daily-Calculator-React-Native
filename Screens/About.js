@@ -43,7 +43,7 @@ function About({navigation}) {
 
       <Text
         style={{
-          margin: 5,
+          margin: 15,
           fontSize: 17,
           color: 'black',
           fontFamily: 'sans-serif-condensed',
